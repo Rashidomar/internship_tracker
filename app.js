@@ -71,7 +71,7 @@ app.get('/contact', (req, res) => {
 
 app.get('/dashboard', isLoggedIn, (req, res, next) => {
     Promise.all([Intern.find(), Project.find(), Document.find()]).then(([internResult, projectResult, documentResult]) => {
-        console.log([internResult, projectResult, documentResult])
+        // console.log([internResult, projectResult, documentResult])
         res.render('std/dashboard', {
             interns: internResult,
             documents: documentResult,
@@ -79,6 +79,16 @@ app.get('/dashboard', isLoggedIn, (req, res, next) => {
         });
     }).catch((err) => {
         console.log(err)
+    })
+})
+
+app.get('/profile', (req, res, next) => {
+    User.findById(
+        req.user.id
+    ).then((result) => {
+        res.render('std/profile', { user: result })
+    }).catch(() => {
+
     })
 })
 
@@ -209,6 +219,7 @@ app.post('/add_document', upload.single('cert'), [
             d_name: req.body.d_name,
             f_name: filename,
             experience: req.body.experience,
+            user_id: req.user.id
         })
         document.save()
             .then((value) => {
@@ -242,6 +253,7 @@ app.post('/add_internship', [
             task: req.body.task,
             duration: req.body.duration,
             experience: req.body.experience,
+            user_id: req.user.id
         })
         intern.save()
             .then((value) => {
@@ -274,6 +286,7 @@ app.post('/add_project', [
             description: req.body.description,
             url: req.body.url,
             duration: req.body.duration,
+            user_id: req.user.id
         })
         project.save()
             .then((value) => {

@@ -305,7 +305,7 @@
                         </button>
                         <div>
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ">
-                                <li><a href="# " class="link-dark d-inline-flex text-decoration-none rounded ">Profile</a></li>
+                                <li><a href="/profile " class="link-dark d-inline-flex text-decoration-none rounded ">Profile</a></li>
                                 <li><a href="# " class="link-dark d-inline-flex text-decoration-none rounded ">Settings</a></li>
                             </ul>
                         </div>
@@ -334,25 +334,27 @@
                                     </thead>
                                     <tbody>
                                         <% interns.forEach(function(intern){ %>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>
-                                                    <%=intern.company%>
-                                                </td>
-                                                <td>
-                                                    <%=intern.role%>
-                                                </td>
-                                                <td>
-                                                    <%=intern.task%>
-                                                </td>
-                                                <td>
-                                                    <%=intern.experience%>
-                                                </td>
-                                                <td>
-                                                    <%=intern.duration%>
-                                                </td>
-                                            </tr>
-                                            <%})%>
+                                            <% if (intern.user_id  == user.id) { %>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>
+                                                        <%=intern.company%>
+                                                    </td>
+                                                    <td>
+                                                        <%=intern.role%>
+                                                    </td>
+                                                    <td>
+                                                        <%=intern.task%>
+                                                    </td>
+                                                    <td>
+                                                        <%=intern.experience%>
+                                                    </td>
+                                                    <td>
+                                                        <%=intern.duration%>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <%})%>
                                     </tbody>
                                 </table>
                             </div>
@@ -379,22 +381,24 @@
                                     </thead>
                                     <tbody>
                                         <% projects.forEach(function(project){ %>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>
-                                                    <%=project.p_name%>
-                                                </td>
-                                                <td>
-                                                    <%=project.duration%>
-                                                </td>
-                                                <td>
-                                                    <%=project.url%>
-                                                </td>
-                                                <td>
-                                                    <%=project.description%>
-                                                </td>
-                                            </tr>
-                                            <%})%>
+                                            <% if (project.user_id  == user.id) { %>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>
+                                                        <%=project.p_name%>
+                                                    </td>
+                                                    <td>
+                                                        <%=project.duration%>
+                                                    </td>
+                                                    <td>
+                                                        <%=project.url%>
+                                                    </td>
+                                                    <td>
+                                                        <%=project.description%>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <%})%>
                                     </tbody>
                                 </table>
                             </div>
@@ -418,17 +422,19 @@
                                         </thead>
                                         <tbody>
                                             <% documents.forEach(function(document){ %>
+                                                <% if (document.user_id  == user.id) { %>
 
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>
-                                                        <%=document.d_name%>
-                                                    </td>
-                                                    <td>
-                                                        <%=document.experience%>
-                                                    </td>
-                                                </tr>
-                                                <%})%>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td>
+                                                            <%=document.d_name%>
+                                                        </td>
+                                                        <td>
+                                                            <%=document.experience%>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <%})%>
 
                                         </tbody>
                                     </table>
