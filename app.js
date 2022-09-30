@@ -286,11 +286,11 @@ app.post('/add_project', [
 })
 
 //remote connectionss
-// let mongo_remote = 'mongodb+srv://root:1234@mydatabase.g0ldg.mongodb.net/pcv_db?retryWrites=true&w=majority'
+let mongo_remote = 'mongodb+srv://root:1234@mydatabase.g0ldg.mongodb.net/pcv_db?retryWrites=true&w=majority'
 
 //Set up default mongoose connection
 // var mongo_local = 'mongodb://127.0.0.1/pcv_db';
-mongoose.connect(mongo_local, { useNewUrlParser: true, useUnifiedTopology: true }).then((result) => {
+mongoose.connect(mongo_remote, { useNewUrlParser: true, useUnifiedTopology: true }).then((result) => {
 
     app.listen(process.env.PORT || port, () => {
         console.log(`Example app listening at http://localhost:${port}`)
