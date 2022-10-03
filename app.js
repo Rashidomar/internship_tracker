@@ -70,7 +70,7 @@ app.get('/contact', (req, res) => {
 })
 
 app.get('/dashboard', isLoggedIn, (req, res, next) => {
-    Promise.all([Intern.find(), Project.find(), Document.find()]).then(([internResult, projectResult, documentResult]) => {
+    Promise.all([Intern.find().sort({'createdAt': -1}).limit(3), Project.find().sort({'createdAt': -1}).limit(3), Document.find().sort({'createdAt': -1}).limit(3)]).then(([internResult, projectResult, documentResult]) => {
         // console.log([internResult, projectResult, documentResult])
         res.render('std/dashboard', {
             interns: internResult,
@@ -452,7 +452,7 @@ app.get('/internship_deatail/:id', isLoggedIn ,(req, res) => {
 });
 
 app.get('/all_internship',isLoggedIn ,(req, res) => {
-    Intern.find().then((result) => {
+    Intern.find().sort({'createdAt': -1}).then((result) => {
         console.log(result)
         res.render('std/all_internships', { interns: result })
     }).catch((error) => {
@@ -473,7 +473,7 @@ app.get('/project_deatail/:id', isLoggedIn ,(req, res) => {
 });
 
 app.get('/all_project',isLoggedIn,(req, res) => {
-    Project.find().then((result) => {
+    Project.find().sort({'createdAt': -1}).then((result) => {
         console.log(result)
         res.render('std/all_projects', { projects: result })
     }).catch((error) => {
@@ -494,7 +494,7 @@ app.get('/document_deatail/:id', isLoggedIn ,(req, res) => {
 });
 
 app.get('/all_document',isLoggedIn ,(req, res) => {
-    Document.find().then((result) => {
+    Document.find().sort({'createdAt': -1}).then((result) => {
         console.log(result)
         res.render('std/all_documents', { documents: result })
     }).catch((error) => {
