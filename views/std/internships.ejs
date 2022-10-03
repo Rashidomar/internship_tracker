@@ -133,7 +133,7 @@
             </ul>
         </header>
     </div>
-    <div class="container">
+    <div class="container-fliud">
         <div class="row">
             <div class="col-md-3  bg-light rounded-3" style="height:fit-content;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
@@ -194,7 +194,7 @@
                                 <li>
                                     <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_internship">Edit</a> -->
                                 </li>
-                                <li><a href="/all_internship" class="link-dark d-inline-flex text-decoration-none rounded">View All Internships</a>
+                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">View</a>
                                 </li>
                             </ul>
                         </div>
@@ -243,7 +243,7 @@
                                 <li>
                                     <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_document">Edit</a> -->
     
-                                    <a href="/all_document" class="link-dark d-inline-flex text-decoration-none rounded">View</a>
+                                    <a href="#" class="link-dark d-inline-flex text-decoration-none rounded">View</a>
                                 </li>
                             </ul>
                         </div>
@@ -292,7 +292,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li><a href="/all_project" class="link-dark d-inline-flex text-decoration-none rounded">View Projects</a></li>
+                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded">View Projects</a></li>
                                 <!-- <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_project">Edits</a></li> -->
                            
                             </ul>
@@ -313,66 +313,239 @@
                 </ul>
             </div>
             <div class="col-md-9" style="height: auto;">
-                <div class="container bg-light rounded-3 px-4" id="hanging-icons">
-                    <h2 class="pb-2 border-bottom">New Lastest Internships</h2>
-                    <div class="row g-4 py-3 row-cols-1 row-cols-lg-3">
-                        <% interns.forEach(function(intern){ %>
-                            <% if (intern.user_id  == user.id) { %>
-                      <div class="col d-flex align-items-start">
-                        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                            <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
-                          </div>
-                        <div>
-                          <h3 class="fs-2"><%=intern.role%></h3>
-                          <p><%=intern.role%></p>
-                          <a href="/internship_deatail/<%=intern.id%>" class="btn btn-primary">View Details</a>
+                <div class="p-5 mb-4 bg-light rounded-3">
+                    <div class="container-fluid py-5">
+                        <h1 class="display-5 fw-bold">Your Internship</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Company</th>
+                                            <th scope="col">role</th>
+                                            <th scope="col">task</th>
+                                            <th scope="col">experience</th>
+                                            <th scope="col">duration</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-hover">
+                                        <% interns.forEach(function(intern){ %>
+                                            <% if (intern.user_id  == user.id) { %>
+                                                <tr>
+                                                    <td><%=intern.company%></td>
+                                                    <td><%=intern.role%></td>
+                                                    <td><%=intern.task%></td>
+                                                    <td><%=intern.experience%></td>
+                                                    <td> <%=intern.duration%></td>
+                                                    <td><button type="button" class="btn btn-warning edit_internship" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#edit_internship" 
+                                                        data-internship_id="<%=intern.id%>" 
+                                                        data-company="<%=intern.company%>" 
+                                                        data-role="<%=intern.role%>" 
+                                                        data-task=" <%=intern.task%>" 
+                                                        data-experience="<%=intern.experience%>" 
+                                                        data-duration="<%=intern.duration%>">Edit</button>
+                                                    </td>
+                                                    <td><button type="button" class="btn btn-danger internship_delete" data-id="<%=intern.id%>">Delete</button></td>
+                                                </tr>
+                                            <% } %>
+                                        <%})%>
+                                    </tbody>
+                                </table>
+                                <!-- Modal Internship Edit-->
+                                <div class="modal fade" id="edit_internship" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Edit Internship</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/edit_internship" method="Post" class="row g-3">
+                                                    <input type="hidden" name="internship_id" id="internship_id">
+                                                    <div class="col-md-6">
+                                                        <label for="inputEmail4" class="form-label">Company</label>
+                                                        <input type="text" name="company" class="form-control" id="company">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="inputPassword4" class="form-label">Role</label>
+                                                        <input type="text" name="role" class="form-control" id="role">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="inputAddress" class="form-label">Your Task</label>
+                                                        <input type="text" name="task" class="form-control" id="task" placeholder=" 1234 Main St ">
+                                                    </div>
+                                                    <div class="col-12 ">
+                                                        <label for="inputAddress" class="form-label">Duration</label>
+                                                        <input type="text" name="duration" class="form-control" id="duration" placeholder="1234 Main St">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="inputCity" class="form-label">Your Experience</label>
+                                                        <textarea class="form-control " name="experience" placeholder="Leave a comment here" id="experience" style="height: 100px"></textarea>
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                        <% } %>
-                      <%})%>
                     </div>
                 </div>
-                <br>
-                <div class="container px-4 py-2 bg-light rounded-3" id="hanging-icons">
-                    <h2 class="pb-2 border-bottom">New Lastest Projects</h2>
-                    <div class="row g-4 py-3 row-cols-1 row-cols-lg-3">
-                        <% projects.forEach(function(project){ %>
-                            <% if (project.user_id  == user.id) { %>
-                      <div class="col d-flex align-items-start">
-                        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+                <div class="row align-items-md-stretch ">
+                    <div class="col-md-6 h-100 p-5 bg-light border rounded-3 ">
+                        <h2>Your Projects</h2>
+                        <div class="card mb-4 ">
+                            <div class="card-body ">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Project Name</th>
+                                            <th scope="col">Duration</th>
+                                            <th scope="col">URL</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <% projects.forEach(function(project){ %>
+                                            <% if (project.user_id  == user.id) { %>
+                                                <tr>
+                                                    <td><%=project.p_name%></td>
+                                                    <td><%=project.duration%></td>
+                                                    <td><%=project.url%></td>
+                                                    <td><%=project.description%></td>
+                                                    <td><button type="button" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#edit_project"
+                                                        data-project_id="<%=project.id%>" 
+                                                        data-p_name="<%=project.p_name%>" 
+                                                        data-p_duration="<%=project.duration%>" 
+                                                        data-url="<%=project.url%>" 
+                                                        data-description="<%=project.description%>"  
+                                                        class="btn btn-info edit_project">Edit</button></td>
+                                                    <td><button type="button" class="btn btn-danger project_delete" data-id="<%=project.id%>">Delete</button></td>
+                                                </tr>
+                                            <% } %>
+                                        <%})%>
+                                    </tbody>
+                                </table>
+                                     <!-- Modal Edit Project-->
+                                     <div class="modal fade" id="edit_project" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Project</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/edit_project" method="Post" class="row g-3">
+                                                        <input type="hidden" name="project_id" id="project_id">
+                                                        <div class="col-md-6">
+                                                            <label for="inputEmail4" class="form-label">Name</label>
+                                                            <input type="text" name="p_name" class="form-control" id="p_name">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="inputPassword4" class="form-label">Duration</label>
+                                                            <input type="text" name="duration" class="form-control" id="p_duration">
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label for="inputAddress" class="form-label">Project url</label>
+                                                            <input type="text" name="url" class="form-control" id="url">
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label for="inputCity" class="form-label">Description</label>
+                                                            <textarea class="form-control" name="description" id="description" style="height: 100px"></textarea>
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
                         </div>
-                        <div>
-                          <h3 class="fs-2"><%=project.p_name%></h3>
-                          <p><%=project.description%>.</p>
-                          <a href="/project_deatail/<%=project.id%>"" class="btn btn-primary">View  Details </a>
-                        </div>
-                      </div>
-                        <% } %>
-                      <%})%>
                     </div>
-                </div>
-                <br>
-                <div class="container px-4 py-2 bg-light rounded-3" id="hanging-icons">
-                    <h2 class="pb-2 border-bottom">New Lastest Documents</h2>
-                    <div class="row g-4 py-3 row-cols-1 row-cols-lg-3">
-                        <% documents.forEach(function(document){ %>
-                            <% if (document.user_id  == user.id) { %>
-                      <div class="col d-flex align-items-start">
-                        <div class="icon-square text-bg-light d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-                          <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
-                        </div>
-                        <div>
-                          <h3 class="fs-2"><%=document.d_name%></h3>
-                          <p><%=document.experience%></p>
-                          <a href="/document_deatail/<%=document.id%>"" class="btn btn-primary">View Details</a>
-                        </div>
-                      </div>
-                      <% } %>
-                      <%})%>
-                    </div>
-                </div>
+                    <div class="col-md-6">
+                        <div class="h-100 p-5 bg-light border rounded-3">
+                            <h2>Your Documents and Certs</h2>
+                            <div class="card mb-4 ">
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Document Name</th>
+                                                <th scope="col">Experience</th>
+                                                <th scope="col">Edit</th>
+                                                <th scope="col">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% documents.forEach(function(document){ %>
+                                                <% if (document.user_id  == user.id) { %>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td> <%=document.d_name%> </td>
+                                                        <td> <%=document.experience%></td>
+                                                        <td><button type="button" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#edit_document"
+                                                            data-document_id="<%=document.id%>" 
+                                                            data-d_name="<%=document.d_name%>" 
+                                                            data-d_experience="<%=document.experience%>" 
+                                                            class="btn btn-info edit_document">Edit</button></td>
+                                                        <td><button type="button" class="btn btn-danger document_delete" data-id="<%=document.id%>">Delete</button></td>
+                                                    </tr>
+                                                <% } %>
+                                            <%})%>
 
+                                        </tbody>
+                                    </table>
+                                        <!-- Modal Edit Cert-->
+                                        <div class="modal fade" id="edit_document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Edit Certifications/Documents</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close "></button>
+                                                    </div>
+                                                    <div class="modal-body ">
+                                                        <form action="/edit_document" method="Post" class="row g-3">
+                                                            <input type="hidden" name="document_id" id="document_id">
+                                                            <div class="col-md-6">
+                                                                <label for="inputEmail4" class="form-label">Name</label>
+                                                                <input type="text " name="d_name" class="form-control" id="d_name">
+                                                            </div>
+                                                            <div class="col-md-6 ">
+                                                                <label for="inputCity" class="form-label ">Your Experience</label>
+                                                                <textarea class="form-control" name="experience" id="d_experience" style="height: 100px"></textarea>
+                                                            </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <footer class="pt-3 mt-4 text-muted border-top">&copy; 2022</footer>
             </div>
         </div>
@@ -474,6 +647,8 @@
                     }
 
                 });
+
+                
 
                 $('.internship_delete').on('click', function(event) {
                 event.preventDefault();

@@ -82,7 +82,7 @@ app.get('/dashboard', isLoggedIn, (req, res, next) => {
     })
 })
 
-app.get('/profile', (req, res, next) => {
+app.get('/profile', isLoggedIn, (req, res, next) => {
     User.findById(
         req.user.id
     ).then((result) => {
@@ -231,6 +231,35 @@ app.post('/add_document', upload.single('cert'), [
     }
 })
 
+app.post('/edit_document', [
+
+    check('d_name', 'Document nameis required').notEmpty(),
+    check('experience', 'experience is required').notEmpty(),
+
+], (req, res, next) => {
+    let id = req.body.document_id;
+    let d_name = req.body.d_name;
+    let experience = req.body.experience;
+    let errors = validationResult(req);
+    console.log(req.body)
+    if (!errors.isEmpty()) {
+        console.log(req.body), res.redirect('/dashboard', {
+            errors: errors.array()
+        }, console.log(errors));
+    } else {
+        Document.findOneAndUpdate({_id: id}, {$set:{d_name: d_name, experience: experience}}, {new: true}, (err, doc) => {
+            if (err) {
+
+                console.log(err);
+            }else{
+                console.log(doc);
+                res.redirect('/dashboard');
+                req.flash('success_msg', 'You have now registered!')
+            }
+        });
+    }
+})
+
 
 app.post('/add_internship', [
 
@@ -265,6 +294,46 @@ app.post('/add_internship', [
     }
 })
 
+app.post('/edit_internship', [
+
+    check('company', 'Company name is required').notEmpty(),
+    check('role', 'Role is required').notEmpty(),
+    check('task', 'Task is required').notEmpty(),
+    check('experience', 'Experience is required').notEmpty(),
+    check('duration', 'Duration is required').notEmpty(),
+
+], (req, res) => {
+    let id = req.body.internship_id;
+    console.log(req.body)
+
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(req.body), res.redirect('/dashboard', {
+            errors: errors.array()
+        }, console.log(errors));
+    } else {
+        Intern.findOneAndUpdate({_id: id}, 
+        {$set:{
+            company: req.body.company,
+            role: req.body.role,
+            task: req.body.task,
+            duration: req.body.duration,
+            experience: req.body.experience,
+        }}, 
+        {new: true}, (err, doc) => {
+            if (err) {
+
+                console.log(err);
+            }else{
+                console.log(doc);
+                res.redirect('/dashboard');
+                req.flash('success_msg', 'You have now registered!')
+            }
+        });
+   
+    }
+})
+
 
 
 app.post('/add_project', [
@@ -296,6 +365,142 @@ app.post('/add_project', [
             })
             .catch(value => console.log(value));
     }
+});
+
+app.post('/edit_project', [
+
+    check('p_name', 'Project name nameis required').notEmpty(),
+    check('description', 'Description is required').notEmpty(),
+    check('url', 'A url link for your project is required').notEmpty(),
+    check('duration', 'Duration is required').notEmpty(),
+
+], (req, res) => {
+    let id = req.body.project_id;
+    console.log(req.body)
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(req.body), res.redirect('/dashboard', {
+            errors: errors.array()
+        }, console.log(errors));
+    } else {
+        Project.findOneAndUpdate({_id: id}, 
+            {$set:{
+                p_name: req.body.p_name,
+                description: req.body.description,
+                url: req.body.url,
+                duration: req.body.duration,
+            }}, 
+            {new: true}, (err, doc) => {
+                if (err) {
+                    console.log(err);
+                }else{
+                    console.log(doc);
+                    res.redirect('/dashboard');
+                    req.flash('success_msg', 'You have now registered!')
+                }
+            });
+    }
+});
+
+app.delete('/delete_document/:id', isLoggedIn ,(req, res) => {
+    let id = req.params.id;
+    // console.log(id)
+    Document.deleteOne({ _id: id })
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch(err => {
+            res.status.json({ err: err });
+        });
+});
+
+app.delete('/delete_project/:id', isLoggedIn ,(req, res) => {
+            let id = req.params.id;
+            console.log(id)
+            Project.deleteOne({ _id: id })
+                .then(() => {
+                    res.json({ success: true });
+                })
+                .catch(err => {
+                    res.status.json({ err: err });
+        });
+    });
+
+
+app.delete('/delete_internship/:id', isLoggedIn ,(req, res) => {
+            let id = req.params.id;
+            console.log(id)
+            Intern.deleteOne({ _id: id })
+                .then(() => {
+                    res.json({ success: true });
+                })
+                .catch(err => {
+                    res.status.json({ err: err });
+                });
+});
+
+
+app.get('/internship_deatail/:id', isLoggedIn ,(req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    Intern.findById(id).then((result) => {
+        res.render('std/intern_details', { intern: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+  
+});
+
+app.get('/all_internship',isLoggedIn ,(req, res) => {
+    Intern.find().then((result) => {
+        console.log(result)
+        res.render('std/all_internships', { interns: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+  
+})
+
+app.get('/project_deatail/:id', isLoggedIn ,(req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    Project.findById(id).then((result) => {
+        res.render('std/project_details', { project: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+  
+});
+
+app.get('/all_project',isLoggedIn,(req, res) => {
+    Project.find().then((result) => {
+        console.log(result)
+        res.render('std/all_projects', { projects: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+ 
+})
+
+app.get('/document_deatail/:id', isLoggedIn ,(req, res) => {
+    let id = req.params.id;
+    console.log(id)
+    Document.findById(id).then((result) => {
+        res.render('std/document_details', { document: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+  
+});
+
+app.get('/all_document',isLoggedIn ,(req, res) => {
+    Document.find().then((result) => {
+        console.log(result)
+        res.render('std/all_documents', { documents: result })
+    }).catch((error) => {
+           console.log(error)
+    })
+ 
 })
 
 //remote connectionss
