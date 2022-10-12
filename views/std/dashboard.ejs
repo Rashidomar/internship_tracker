@@ -126,10 +126,9 @@
                 <span class="fs-4">Internship Tracker</span>
             </a>
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="#" class="nav-link">Generate Summary</a>
-
-                    <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a>
-                    </li>
+                <li class="nav-item"><a href="/cv/<%=user.id%>" class="nav-link">Generate Summary</a></li>
+               
+                <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a></li>
             </ul>
         </header>
     </div>
@@ -144,11 +143,55 @@
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapse" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                            Internship Experience
+                            Internship
                         </button>
-                        <div class="collapse show" id="home-collapse">
+                        <div>
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#internship">Add New</a>
+                                <li>
+                                    <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#register_internship">Register For An Internship</a>
+                                    <!-- Modal Internship Register-->
+                                    <div class="modal fade" id="register_internship" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Internship Registration</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/register_internship" method="Post" class="row g-3">
+                                                        <div class="col-md-6">
+                                                            <label for="inputEmail4" class="form-label">Name</label>
+                                                            <input type="text" name="name" class="form-control" id="inputEmail4">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="inputPassword4" class="form-label">Company</label>
+                                                            <input type="text" name="company" class="form-control" id="inputPassword4">
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label for="inputAddress" class="form-label">Contact</label>
+                                                            <input type="text" name="contact" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <label for="inputState" class="form-label">Superviser</label>
+                                                            <select id="inputState" name="supervisor" class="form-select">
+                                                              <option selected>Choose a Superviser</option>
+                                                                <% supervisors.forEach(function(supervisor){ %>
+                                                                 <option value="<%= supervisor.name %>"><%= supervisor.name %></option>                                                        
+                                                              <%})%>
+                                                            </select>
+                                                          </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><a href="/all_internReg" class="link-dark d-inline-flex text-decoration-none rounded">View All Registered Internships</a></li>
+                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#internship">Add Internship Experience</a>
                                     <!-- Modal Internship-->
                                     <div class="modal fade" id="internship" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -158,80 +201,39 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form action="/add_internship" method="Post" class="row g-3">
-                                                        <div class="col-md-6">
+                                                    <form id="verify" action="/add_internship" method="Post" class="row g-3">
+                                                        <div class="col-md-12">
                                                             <label for="inputEmail4" class="form-label">Company</label>
-                                                            <input type="text" name="company" class="form-control" id="inputEmail4">
+                                                            <select id="selectedValue" name="supervisor" class="form-select">
+                                                                <option value="none">Choose a Company</option>
+                                                                <% internRegs.forEach(function(internReg){ %>
+                                                                    <% if (internReg.f_approval  == 'Approved') { %>
+                                                                        <option name="<%=internReg.f_approval%>" value="<%=internReg.f_approval%>"><%=internReg.company%></option>
+                                                                    <% } %>
+                                                                <%})%>   
+                                                              </select>
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <div class="col-md-12">
                                                             <label for="inputPassword4" class="form-label">Role</label>
-                                                            <input type="text" name="role" class="form-control" id="inputPassword4">
+                                                            <input type="text" name="role" class="form-control" disabled>
                                                         </div>
                                                         <div class="col-12">
                                                             <label for="inputAddress" class="form-label">Your
                                                                 Task</label>
-                                                            <input type="text" name="task" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                                            <input type="text" name="task" class="form-control" placeholder="1234 Main St" disabled>
                                                         </div>
                                                         <div class="col-12">
                                                             <label for="inputAddress" class="form-label">Duration</label>
-                                                            <input type="text" name="duration" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                                                            <input type="text" name="duration" class="form-control" placeholder="1234 Main St" disabled>
                                                         </div>
                                                         <div class="col-12">
                                                             <label for="inputCity" class="form-label">Your
                                                                 Experience</label>
-                                                            <textarea class="form-control" name="experience" placeholder=" Leave a comment here " id="floatingTextarea2 " style="height: 100px "></textarea>
+                                                            <textarea class="form-control" name="experience" placeholder=" Leave a comment here" disabled style="height: 100px "></textarea>
                                                         </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary " data-bs-dismiss="modal ">Close</button>
-                                                    <button type="submit " class="btn btn-primary ">Submit</button>
-                                                </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_internship">Edit</a> -->
-                                </li>
-                                <li><a href="/all_internship" class="link-dark d-inline-flex text-decoration-none rounded">View All Internships</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="mb-1">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                            Certs And Documents
-                        </button>
-                        <div class="collapse" id="dashboard-collapse">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#document">Add</a>
-                                    <!-- Modal Certts-->
-                                    <div class="modal fade" id="document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog ">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">New Certifications/Documents
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="/add_document" method="Post" enctype="multipart/form-data" class="row g-3">
-                                                        <div class="col-md-6">
-                                                            <label for="inputEmail4" class="form-label">Name</label>
-                                                            <input type="text" name="d_name" class="form-control" id="inputEmail4">
-                                                        </div>
-                                                        <div class="mb-3 col-12">
-                                                            <label for="formFile" class="form-label">Select file</label>
-                                                            <input class="form-control" type="file" name="cert" id="formFile">
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label for="inputCity" class="form-label">Your Experience</label>
-                                                            <textarea class="form-control " name="experience" placeholder=" Leave a Experience here " id="floatingTextarea2" style="height: 100px "></textarea>
-                                                        </div>
-
-                                                </div>
-                                                <div class="modal-footer">
+                                                    <!-- <button  class="btn btn-primary">Submit</button> -->
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
@@ -240,11 +242,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_document">Edit</a> -->
-    
-                                    <a href="/all_document" class="link-dark d-inline-flex text-decoration-none rounded">View</a>
-                                </li>
+                                <li><a href="/all_internship" class="link-dark d-inline-flex text-decoration-none rounded">View All Internships</a></li>
                             </ul>
                         </div>
                     </li>
@@ -252,7 +250,7 @@
                         <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
                             Projects
                         </button>
-                        <div class="collapse" id="orders-collapse">
+                        <div>
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#project">Add New Project</a>
                                      <!-- Modal Project-->
@@ -298,9 +296,58 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+                            Certs And Documents
+                        </button>
+                        <div>
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#document">Add</a>
+                                    <!-- Modal Certts-->
+                                    <div class="modal fade" id="document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog ">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">New Certifications/Documents
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/add_document" method="Post" enctype="multipart/form-data" class="row g-3">
+                                                        <div class="col-md-6">
+                                                            <label for="inputEmail4" class="form-label">Name</label>
+                                                            <input type="text" name="d_name" class="form-control" id="inputEmail4">
+                                                        </div>
+                                                        <div class="mb-3 col-12">
+                                                            <label for="formFile" class="form-label">Select file</label>
+                                                            <input class="form-control" type="file" name="cert" id="formFile">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="inputCity" class="form-label">Your Experience</label>
+                                                            <textarea class="form-control " name="experience" placeholder=" Leave a Experience here " id="floatingTextarea2" style="height: 100px "></textarea>
+                                                        </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_document">Edit</a> -->
+    
+                                    <a href="/all_document" class="link-dark d-inline-flex text-decoration-none rounded">View</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="border-top my-3 "></li>
                     <li class="mb-1 ">
-                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse " aria-expanded="true ">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse " aria-expanded="true">
                             Account
                         </button>
                         <div>
@@ -382,6 +429,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            $('#selectedValue').click(function(e){
+            // e.preventDefault();
+            var selectedValue = $(this).find(":selected").val();
+            if(selectedValue == "Approved"){
+                $('#verify input,textarea').removeAttr('disabled');
+            }
+            // console.log(selectedValue)
+            });
+
 
             $('.edit_internship').click(function() {
                 var internship_id = $(this).data('internship_id');
@@ -402,101 +458,7 @@
 
 
             });
-
-            $('.edit_project').click(function() {
-                var project_id = $(this).data('project_id');
-                var p_name = $(this).data('p_name');
-                var p_duration = $(this).data('p_duration');
-                var description = $(this).data('description');
-                var url = $(this).data('url');
-                console.log(project_id)
-
-
-                $('#project_id').val(project_id);
-                $('#p_name').val(p_name);
-                $('#p_duration').val(p_duration);
-                $('#url').val(url);
-                $('#description').val(description);
-
-            });
-
-            $('.edit_document').click(function() {
-                var document_id = $(this).data('document_id');
-                var d_name = $(this).data('d_name');
-                var d_experience = $(this).data('d_experience');
-                console.log(document_id)
-
-                // $('#document_id').data('myval',20); //setter
-                $('#document_id').val(document_id);
-                $('#d_name').val(d_name);
-                $('#d_experience').val(d_experience);
-
-            });
-
-
-            $('.document_delete').on('click', function(event) {
-                event.preventDefault();
-                const tr = $(this).closest('tr');
-                const id = $(this).attr('data-id');
-                $.ajax({
-                    url: '/delete_document/' + id,
-                    method: 'DELETE',
-                    data: {
-                        id: id
-                    }
-                }).done(function(res) {
-                    if (res.success) {
-                        console.log('id from ajax call is', res);
-                        tr.remove();
-                    } else {
-                        console.log('error...ajax');
-                    }
-
-                })
-            });
-
-            $('.project_delete').on('click', function(event) {
-                event.preventDefault();
-                const tr = $(this).closest('tr');
-                const id = $(this).attr('data-id');
-                $.ajax({
-                    url: '/delete_project/' + id,
-                    method: 'DELETE',
-                    data: {
-                        id: id
-                    }
-                }).done(function(res) {
-                    if (res.success) {
-                        console.log('id from ajax call is', res);
-                        tr.remove();
-                    } else {
-                        console.log('error...ajax');
-                    }
-
-                });
-
-                $('.internship_delete').on('click', function(event) {
-                event.preventDefault();
-                const tr = $(this).closest('tr');
-                const id = $(this).attr('data-id');
-                $.ajax({
-                    url: '/delete_internship/' + id,
-                    method: 'DELETE',
-                    data: {
-                        id: id
-                    }
-                }).done(function(res) {
-                    if (res.success) {
-                        console.log('id from ajax call is', res);
-                        tr.remove();
-                    } else {
-                        console.log('error...ajax');
-                    }
-
-                })
-            })
-            })
-
+ 
         });
     </script>
 

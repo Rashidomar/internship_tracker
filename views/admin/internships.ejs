@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>All Internship</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="../css/styles2.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
+    </script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap" /></svg>
+                <span class="fs-4">Internship Tracker</span>
+            </a>
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="#" class="nav-link">Generate Summary</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a></li>
+            </ul>
+        </header>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 bg-light rounded-3 card mb-4" style="height: 600px; padding: 20px;">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">Your Internships</h1>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">role</th>
+                                        <th scope="col">task</th>
+                                        <th scope="col">experience</th>
+                                        <th scope="col">duration</th>
+                                        <th scope="col">Details</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% interns.forEach(function(intern){ %>
+                                            <tr>
+                                                <td><%=intern.company%></td>
+                                                <td><%=intern.role%></td>
+                                                <td><%=intern.task%></td>
+                                                <td><%=intern.experience%></td>
+                                                <td> <%=intern.duration%></td>
+
+                                                <td><a href="/internship_deatail/<%=intern.id%>" class="btn btn-info" data-id="<%=intern.id%>">View</a></td>
+                                            </tr>
+                                    <%})%>
+                                </tbody>
+                            </table>
+                            <!-- Modal Internship Edit-->
+                            <div class="modal fade" id="edit_internship" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Edit Internship</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/edit_internship" method="Post" class="row g-3">
+                                                <input type="hidden" name="internship_id" id="internship_id">
+                                                <div class="col-md-6">
+                                                    <label for="inputEmail4" class="form-label">Company</label>
+                                                    <input type="text" name="company" class="form-control" id="company">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputPassword4" class="form-label">Role</label>
+                                                    <input type="text" name="role" class="form-control" id="role">
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="inputAddress" class="form-label">Your Task</label>
+                                                    <input type="text" name="task" class="form-control" id="task" placeholder=" 1234 Main St ">
+                                                </div>
+                                                <div class="col-12 ">
+                                                    <label for="inputAddress" class="form-label">Duration</label>
+                                                    <input type="text" name="duration" class="form-control" id="duration" placeholder="1234 Main St">
+                                                </div>
+                                                <div class="col-12">
+                                                    <label for="inputCity" class="form-label">Your Experience</label>
+                                                    <textarea class="form-control " name="experience" placeholder="Leave a comment here" id="experience" style="height: 100px"></textarea>
+                                                </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js " crossorigin="anonymous "></script>
+    <script src="../js/scripts.js "></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+    <script>
+        $(document).ready(function() {
+
+            $('.edit_internship').click(function() {
+                var internship_id = $(this).data('internship_id');
+                var company = $(this).data('company');
+                var role = $(this).data('role');
+                var task = $(this).data('task');
+                var experience = $(this).data('experience');
+                var duration = $(this).data('duration');
+                console.log(internship_id)
+
+
+                $('#internship_id').val(internship_id);
+                $('#company').val(company);
+                $('#role').val(role);
+                $('#task').val(task);
+                $('#experience').val(experience);
+                $('#duration').val(duration);
+
+
+            });
+
+                $('.internship_delete').on('click', function(event) {
+                event.preventDefault();
+                const tr = $(this).closest('tr');
+                const id = $(this).attr('data-id');
+                $.ajax({
+                    url: '/delete_internship/' + id,
+                    method: 'DELETE',
+                    data: {
+                        id: id
+                    }
+                }).done(function(res) {
+                    if (res.success) {
+                        console.log('id from ajax call is', res);
+                        tr.remove();
+                    } else {
+                        console.log('error...ajax');
+                    }
+
+                })
+            })
+
+        });
+    </script>
+
+</body>
+
+</html>
+
+</html>
+
+</html>
+
+</html>

@@ -1,47 +1,47 @@
 let mongoose = require('mongoose')
 
-let userSchema = new mongoose.Schema({
-    firstname: {
+let internRegSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
 
     },
-    lastname: {
+    company: {
         type: String,
         required: true,
 
     },
-    school: {
+    contact: {
         type: String,
         required: true,
 
     },
-    course: {
+    supervisor: {
         type: String,
         required: true,
 
     },
-    email: {
+    status: {
         type: String,
-        required: true,
+        default: "none"
+
+    },
+    f_approval: {
+        type: String,
+        default: "none"
 
     },
 
-    user_type: {
-        type: String,
-        default: 'student'
-
-    },
-
-    password: {
+    user_id: {
         type: String,
         required: true,
+
     }
 
 }, { timestamps: true })
 
 
 
-let User = mongoose.model('User', userSchema)
+let InternReg = mongoose.model('InternReg', internRegSchema)
 
-module.exports = User
+module.exports = InternReg

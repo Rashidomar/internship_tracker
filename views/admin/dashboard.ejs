@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link href="../css/styles2.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
+    </script>
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+        
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+        
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+        
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+        
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+        
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap" /></svg>
+                <span class="fs-4">Internship Tracker</span>
+            </a>
+            <ul class="nav nav-pills">               
+                <li class="nav-item"><a href="/logout" class="nav-link">Sign Out</a></li>
+            </ul>
+        </header>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3  bg-light rounded-3" style="height:fit-content;">
+                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi pe-none me-2" width="30" height="24">
+                        <use xlink:href="#bootstrap" /></svg>
+                    <span class="fs-5 fw-semibold"><%= user.firstname %></span>
+                </a>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapse" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                            Roles
+                        </button>
+                        <div class="collapse show" id="home-collapse">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#add_super">Add Supervisor</a>
+                                    <!-- Modal Internship-->
+                                    <div class="modal fade" id="add_super" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">New Supervisor</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="/add_super" method="Post" class="row g-3">
+                                                        <div class="col-md-12">
+                                                            <label for="inputEmail4" class="form-label">Name</label>
+                                                            <input type="text" name="name" class="form-control" id="inputEmail4">
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <!-- <a href="#" class="link-dark d-inline-flex text-decoration-none rounded" data-bs-toggle="modal" data-bs-target="#edit_internship">Edit</a> -->
+                                </li>
+                                <li><a href="/internships" class="link-dark d-inline-flex text-decoration-none rounded">View All Internships</a></li>
+                                <li><a href="/students" class="link-dark d-inline-flex text-decoration-none rounded">View All Student Accounts</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="border-top my-3 "></li>
+                    <li class="mb-1 ">
+                        <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse " aria-expanded="true ">
+                            Account
+                        </button>
+                        <div>
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ">
+                                <li><a href="/profile " class="link-dark d-inline-flex text-decoration-none rounded ">Profile</a></li>
+                                <li><a href="# " class="link-dark d-inline-flex text-decoration-none rounded ">Settings</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8 mx-3 bg-light rounded-3">
+                <h2>Registered Internships</h2>
+                <div class="table-responsive">
+                  <table class="table table-striped table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Company</th>
+                        <th scope="col">Contact</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Final Approval</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% internRegs.forEach(function(internReg){ %>
+                      <tr>
+                        <td><%=internReg.name%></td>
+                        <td><%=internReg.company%></td>
+                        <td><%=internReg.contact%></td>
+                        <td>
+                            <span class="result1"><%=internReg.status%></span>
+                            <button class="btn btn-success s_approve" data-id="<%=internReg.id%>"  id="">A</button>
+                            <button class="btn btn-danger s_deny" data-id="<%=internReg.id%>" id="">D</button>
+                        </td>
+                        <td>
+                            <span class="result2"><%=internReg.f_approval%></span>
+                            <button class="btn btn-success approve" data-id="<%=internReg.id%>"  id="">A</button>
+                            <button  class="btn btn-danger deny" data-id="<%=internReg.id%>" id="">D</button>
+                          
+                        </td>
+                      </tr>   
+                      <%})%>  
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="../js/scripts.js "></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.s_approve').on('click', function(event) {
+                event.preventDefault();
+                var id = $(this).data('id');  
+                var tr = $(this).closest('tr');
+                var status = "Approved"    
+                // var status = $(this).find(":selected").val();
+                // console.log(span)
+                $.ajax({
+                    url: '/update_status',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        status : status
+                    }
+                }).done(function(result) {
+                    console.log(result)
+                    if (result.msg == "success") {
+                        tr.find(".result1").text("Approved")
+                        // $(".result1")
+                        // console.log('id from ajax call is', result);
+                    } else {
+                        console.log('error...ajax');
+                    }
+
+                })
+            });
+
+            $('.s_deny').on('click', function(event) {
+                event.preventDefault();
+                var id = $(this).data('id'); 
+                var tr = $(this).closest('tr'); 
+                var status = "Denied"    
+                // var status = $(this).find(":selected").val();
+                // console.log(id)
+                $.ajax({
+                    url: '/update_status',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        status : status
+                    }
+                }).done(function(result) {
+                    if (result.msg == "success") {
+                        tr.find(".result1").text("Denied")
+                        // console.log('id from ajax call is', result);
+                    } else {
+                        console.log('error...ajax');
+                    }
+
+                })
+            });
+
+            $('.approve').on('click', function(event) {
+                event.preventDefault();
+                var id = $(this).data('id');  
+                var tr = $(this).closest('tr');
+                var status = "Approved"    
+                // var status = $(this).find(":selected").val();
+                console.log(id)
+                $.ajax({
+                    url: '/update_Fapprove',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        status : status
+                    }
+                }).done(function(result) {
+                    console.log(result)
+                    if (result.msg == "success") {
+                        tr.find(".result2").text("Approved")
+                        // console.log('id from ajax call is', result);
+                    } else {
+                        console.log('error...ajax');
+                    }
+
+                })
+            });
+
+            $('.deny').on('click', function(event) {
+                event.preventDefault();
+                var id = $(this).data('id');  
+                var tr = $(this).closest('tr');
+                var status = "Denied"    
+                // var status = $(this).find(":selected").val();
+                // console.log(id)
+                $.ajax({
+                    url: '/update_Fapprove',
+                    method: 'POST',
+                    data: {
+                        id: id,
+                        status : status
+                    }
+                }).done(function(result) {
+                    if (result.msg == "success") {
+                        tr.find(".result2").text("Denied")
+                        // console.log('id from ajax call is', result);
+                    } else {
+                        console.log('error...ajax');
+                    }
+
+                })
+            });
+
+
+
+        });
+    </script>
+
+
+</body>
+
+</html>
+
+</html>
